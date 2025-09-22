@@ -12,9 +12,9 @@ This Pine Script strategy implements an advanced intraday trading system based o
 - *Alert Conditions:* Supports alerts for entry signals to integrate with automation platforms like Zapier and Alpaca.
 
 ## Performance Summary (Backtested on AAPL)  
-![Performance Overview](assests/overview2.png)
+![Performance Overview](assets/overview2.png)
 
-![Trade Analysis](assests/trade-analysis.png)
+![Trade Analysis](assets/trade-analysis.png)
 
 - Total Trades: 365  
 - Win Rate: 36.16%  
