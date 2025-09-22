@@ -13,6 +13,7 @@ This Pine Script strategy implements an advanced intraday trading system based o
 
 ## Performance Summary (Backtested on AAPL)  
 ![Performance Overview](assests/overview2.png)
+
 ![Trade Analysis](assests/trade-analysis.png)
 
 - Total Trades: 365  
