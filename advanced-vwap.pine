@@ -1,0 +1,52 @@
+//@version=5
+strategy("Advanced VWAP Reclaim + ATR Filter + Time Window + Bracket Order", overlay=true, default_qty_type=strategy.percent_of_equity, default_qty_value=10)
+
+// === INPUTS ===
+startHour     = input.int(9, "Session Start Hour", minval=0, maxval=23)
+startMinute   = input.int(30, "Session Start Minute", minval=0, maxval=59)
+endHour       = input.int(15, "Session End Hour", minval=0, maxval=23)
+endMinute     = input.int(30, "Session End Minute", minval=0, maxval=59)
+
+atrLength     = input.int(14, "ATR Length")
+atrMultSL     = input.float(1.5, "SL ATR Multiplier")
+atrMultTP     = input.float(3.0, "TP ATR Multiplier")
+
+maxTradesPerDay = input.int(2, "Max Trades Per Day")
+
+// === TIME FILTER ===
+sessStart = timestamp("GMT-5", year, month, dayofmonth, startHour, startMinute)
+sessEnd   = timestamp("GMT-5", year, month, dayofmonth, endHour, endMinute)
+inSession = time >= sessStart and time <= sessEnd
+
+// === VWAP CROSSUP ===
+vwap = ta.vwap
+price_below = close[1] < vwap[1]
+price_cross_up = close > vwap and price_below
+// === ATR CALCULATIONS ===
+atr     = ta.atr(atrLength)
+longSL  = close - (atr * atrMultSL)
+longTP  = close + (atr * atrMultTP)
+
+// === TRADE LIMIT PER DAY ===
+var int tradeCount = 0
+newDay = ta.change(time("D"))
+if newDay
+    tradeCount := 0
+
+canTrade = tradeCount < maxTradesPerDay
+
+// === ENTRY LOGIC ===
+enterLong = price_cross_up and inSession and canTrade
+
+if enterLong
+    strategy.entry("Long", strategy.long)
+    strategy.exit("TP/SL", from_entry="Long", stop=longSL, limit=longTP)
+    tradeCount += 1
+
+// === PLOTS ===
+plot(vwap, title="VWAP", color=color.orange)
+plot(longSL, title="Stop Loss", color=color.red)
+plot(longTP, title="Take Profit", color=color.green)
+
+// === ALERT ===
+alertcondition(enterLong, title="VWAP Reclaim Entry", message="Long Signal for {{ticker}} at {{close}}")
