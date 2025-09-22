@@ -12,9 +12,9 @@ This Pine Script strategy implements an advanced intraday trading system based o
 - *Alert Conditions:* Supports alerts for entry signals to integrate with automation platforms like Zapier and Alpaca.
 
 ## Performance Summary (Backtested on AAPL)  
-![Performance Overview](assets/overview2.png)
+![Performance Overview](overview2.png)
 
-![Trade Analysis](assets/trade-analysis.png)
+![Trade Analysis](trade-analysis.png)
 
 - Total Trades: 365  
 - Win Rate: 36.16%  
@@ -25,7 +25,7 @@ This Pine Script strategy implements an advanced intraday trading system based o
 *Results based on historical data from Dec 1980 to Sep 2025.*
 
 How to Use  
-1. Copy the `advanced_vwap.pine` script into TradingView’s Pine Editor.  
+1. Copy the `advanced-vwap.pine` script into TradingView’s Pine Editor.  
 2. Adjust session times, ATR settings, and trade limits via inputs to match your preferences.  
 3. Add alerts for entry signals to connect with webhook services.  
 4. For full automation, integrate with Zapier to receive alerts and use Alpaca API to place bracket orders automatically.
